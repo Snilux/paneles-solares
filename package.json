@@ -1,0 +1,31 @@
+{
+  "name": "paneles-solares",
+  "version": "1.0.0",
+  "description": "Application web for Soluciones Tecnologicas .NET",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./src/public/css/input.css -o ./src/public/css/output.css --watch",
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cookie-parser": "1.4.7",
+    "cors": "2.8.5",
+    "ejs": "3.1.10",
+    "express": "5.1.0",
+    "morgan": "1.10.0",
+    "mysql2": "3.14.1",
+    "nodemailer": "7.0.5",
+    "zod": "3.25.32"
+  },
+  "devDependencies": {
+    "autoprefixer": "10.4.21",
+    "dotenv": "16.5.0",
+    "postcss": "8.5.3",
+    "tailwindcss": "3.4.17"
+  }
+}

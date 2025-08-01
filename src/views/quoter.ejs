@@ -1,0 +1,397 @@
+<%- include('./partials/head.ejs') %>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 md:p-8">
+
+    <div class="w-full max-w-6xl mx-auto">
+
+        <!-- Título -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">Cotizador de Paneles Solares</h1>
+            <p class="text-slate-600">Configura y obtén un presupuesto instantáneo para tu sistema solar</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Formulario de Cotización -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-lg border-0 overflow-hidden h-full">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-6">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-white text-yellow-500 p-2 rounded-full flex items-center justify-center">
+                                <i class="ri-sun-line text-lg"></i>
+                            </span>
+                            <div>
+                                <h2 class="text-xl font-bold">Configura tu Sistema Solar</h2>
+                                <p class="text-yellow-100 text-sm">Proporciona los datos de tu consumo eléctrico para
+                                    calcular tu sistema ideal</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                                <i class="ri-sun-line text-yellow-500"></i>
+                                Paneles Solares
+                            </h3>
+                            <hr class="border-gray-200">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
+                            <div class="space-y-2">
+                                <label for="tipoTarifa" class="block text-sm font-medium text-slate-700">
+                                    Categoria de tarifa eléctrica
+                                </label>
+                                <select id="tipoTarifa"
+                                    class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    <option value="">Selecciona tipo de tarifa</option>
+                                    <option value="domestica" data-precio="8000">Doméstica</option>
+                                    <option value="comercial" data-precio="7500">Comercial</option>
+                                    <option value="industrial" data-precio="7000">Industrial</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Configuración básica -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <!-- Tipo de tarifa -->
+
+                            <div class="space-y-2">
+                                <label for="tipoTarifa" class="block text-sm font-medium text-slate-700">
+                                    Tipo de tarifa eléctrica
+                                </label>
+                                <select id="tipoTarifa"
+                                    class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    <option value="">Selecciona tipo de tarifa</option>
+                                    <option value="domestica" data-precio="8000">Doméstica</option>
+                                    <option value="comercial" data-precio="7500">Comercial</option>
+                                    <option value="industrial" data-precio="7000">Industrial</option>
+                                </select>
+                            </div>
+
+                            <!-- Número de hilos -->
+                            <div class="space-y-2">
+                                <label for="numeroHilos" class="block text-sm font-medium text-slate-700">
+                                    Número de hilos
+                                </label>
+                                <select id="numeroHilos"
+                                    class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    <option value="">Selecciona número de hilos</option>
+                                    <option value="2" data-factor="1">2 Hilos</option>
+                                    <option value="3" data-factor="1.2">3 Hilos</option>
+                                    <option value="4" data-factor="1.4">4 Hilos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Consumo de kWH -->
+                        <div class="mb-6">
+                            <h4 class="text-lg font-medium text-slate-700 mb-3">Consumo de kWH de los últimos 6 meses
+                            </h4>
+                            <p class="text-sm text-slate-500 mb-4">
+                                Ingresa el consumo en kWH de cada mes para calcular tu promedio y determinar el número
+                                de paneles necesarios
+                            </p>
+
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div class="space-y-2">
+                                    <label for="kwh1" class="block text-sm font-medium text-slate-700">
+                                        Mes 1 (kWH)
+                                    </label>
+                                    <input type="number" id="kwh1" placeholder="0" min="0" step="0.1"
+                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="kwh2" class="block text-sm font-medium text-slate-700">
+                                        Mes 2 (kWH)
+                                    </label>
+                                    <input type="number" id="kwh2" placeholder="0" min="0" step="0.1"
+                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="kwh3" class="block text-sm font-medium text-slate-700">
+                                        Mes 3 (kWH)
+                                    </label>
+                                    <input type="number" id="kwh3" placeholder="0" min="0" step="0.1"
+                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="kwh4" class="block text-sm font-medium text-slate-700">
+                                        Mes 4 (kWH)
+                                    </label>
+                                    <input type="number" id="kwh4" placeholder="0" min="0" step="0.1"
+                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="kwh5" class="block text-sm font-medium text-slate-700">
+                                        Mes 5 (kWH)
+                                    </label>
+                                    <input type="number" id="kwh5" placeholder="0" min="0" step="0.1"
+                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="kwh6" class="block text-sm font-medium text-slate-700">
+                                        Mes 6 (kWH)
+                                    </label>
+                                    <input type="number" id="kwh6" placeholder="0" min="0" step="0.1"
+                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de Resumen -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-lg border-0 h-full flex flex-col">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6">
+                        <h3 class="text-xl font-bold">Estimado</h3>
+                        <p class="text-slate-300 text-sm">Resumen de tu sistema solar</p>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="p-6 flex-grow flex flex-col">
+                        <!-- Resumen de selecciones -->
+                        <div class="bg-slate-50 rounded-lg p-4 mb-6 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-600">Servicio:</span>
+                                <span
+                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                    Paneles Solares
+                                </span>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-600">Tarifa:</span>
+                                <span id="resumenTarifa"
+                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                    -
+                                </span>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-600">Hilos:</span>
+                                <span id="resumenHilos"
+                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                    -
+                                </span>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-600">Promedio:</span>
+                                <span id="resumenPromedio"
+                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                    0.0 kWH
+                                </span>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-600">Paneles:</span>
+                                <span id="resumenPaneles"
+                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                    0
+                                </span>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-600">Descuento:</span>
+                                <span
+                                    class="text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-200">
+                                    15%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="mt-auto">
+                            <hr class="border-gray-200 mb-6">
+                            <div class="text-center mb-6">
+                                <h4 class="text-lg font-medium text-slate-700 mb-2">Precio Estimado</h4>
+                                <div id="precioEstimado" class="text-3xl font-bold text-yellow-600 mb-2">$0 MXN</div>
+                                <p id="requiereEspecializacion" class="text-sm text-amber-600 hidden">
+                                    Requiere consulta personalizada
+                                </p>
+                                <div class="text-xs text-slate-500 mt-2">*Precio incluye descuento del 15%</div>
+                            </div>
+
+                            <!-- Botón de contacto -->
+                            <button id="btnContactar"
+                                class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 px-4 rounded-lg flex items-center justify-center transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled>
+                                <i class="ri-mail-line mr-2"></i>
+                                Contactar con datos de Cotización
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos del DOM
+        const tipoTarifa = document.getElementById('tipoTarifa');
+        const numeroHilos = document.getElementById('numeroHilos');
+        const kwhInputs = document.querySelectorAll('.kwh-input');
+
+        // Elementos de resumen
+        const resumenTarifa = document.getElementById('resumenTarifa');
+        const resumenHilos = document.getElementById('resumenHilos');
+        const resumenPromedio = document.getElementById('resumenPromedio');
+        const resumenPaneles = document.getElementById('resumenPaneles');
+        const precioEstimado = document.getElementById('precioEstimado');
+        const requiereEspecializacion = document.getElementById('requiereEspecializacion');
+        const btnContactar = document.getElementById('btnContactar');
+
+        // Estado actual
+        let cotizacionActual = {
+            tipoTarifa: '',
+            numeroHilos: '',
+            kwhValues: [0, 0, 0, 0, 0, 0],
+            promedioKwh: 0,
+            numeroPaneles: 0,
+            precioFinal: 0
+        };
+
+        // Función para actualizar el resumen básico
+        function actualizarResumenBasico() {
+            // Actualizar tarifa
+            const tarifaTexto = tipoTarifa.value === 'domestica' ? 'Doméstica' :
+                tipoTarifa.value === 'comercial' ? 'Comercial' :
+                    tipoTarifa.value === 'industrial' ? 'Industrial' : '-';
+            resumenTarifa.textContent = tarifaTexto;
+
+            // Actualizar hilos
+            resumenHilos.textContent = numeroHilos.value ? numeroHilos.value + ' Hilos' : '-';
+        }
+
+        // Función para calcular promedio de kWH
+        function calcularPromedio() {
+            const valores = Array.from(kwhInputs).map(input => parseFloat(input.value) || 0);
+            const promedio = valores.reduce((sum, val) => sum + val, 0) / 6;
+
+            cotizacionActual.kwhValues = valores;
+            cotizacionActual.promedioKwh = promedio;
+
+            resumenPromedio.textContent = promedio.toFixed(1) + ' kWH';
+
+            return promedio;
+        }
+
+        // Función para calcular número de paneles
+        function calcularPaneles(promedioKwh) {
+            // Constantes para el cálculo
+            const wattsPanel = 580; // watts por panel
+            const horasSol = 5; // horas de sol promedio
+            const diasMes = 30; // días por mes
+
+            // Calcular energía mensual en WH
+            const energiaMensual = promedioKwh * 1000;
+
+            // Calcular energía que produce un panel al mes
+            const energiaPorPanel = wattsPanel * horasSol * diasMes;
+
+            // Calcular paneles necesarios
+            const panelesNecesarios = Math.ceil(energiaMensual / energiaPorPanel);
+
+            cotizacionActual.numeroPaneles = panelesNecesarios;
+            resumenPaneles.textContent = panelesNecesarios.toString();
+
+            return panelesNecesarios;
+        }
+
+        // Función para calcular precio final
+        function calcularPrecio() {
+            const promedio = calcularPromedio();
+            const paneles = calcularPaneles(promedio);
+
+            // Verificar si el formulario está completo
+            const isFormComplete = tipoTarifa.value && numeroHilos.value &&
+                cotizacionActual.kwhValues.some(val => val > 0);
+
+            if (isFormComplete && paneles > 0) {
+                // Obtener precio por panel según tarifa
+                const selectedTarifaOption = tipoTarifa.options[tipoTarifa.selectedIndex];
+                const precioPorPanel = parseFloat(selectedTarifaOption.dataset.precio) || 0;
+
+                // Obtener factor por número de hilos
+                const selectedHilosOption = numeroHilos.options[numeroHilos.selectedIndex];
+                const factorHilos = parseFloat(selectedHilosOption.dataset.factor) || 1;
+
+                // Calcular costo total
+                let costoTotal = paneles * precioPorPanel * factorHilos;
+
+                // Aplicar descuento del 15%
+                costoTotal = costoTotal * 0.85;
+
+                cotizacionActual.precioFinal = costoTotal;
+
+                // Verificar si requiere especialización
+                if (costoTotal > 500000 || paneles > 50) {
+                    requiereEspecializacion.classList.remove('hidden');
+                    precioEstimado.textContent = 'Consulta personalizada';
+                } else {
+                    requiereEspecializacion.classList.add('hidden');
+                    precioEstimado.textContent = `$${costoTotal.toLocaleString('es-MX', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    })} MXN`;
+                }
+
+                btnContactar.disabled = false;
+            } else {
+                precioEstimado.textContent = '$0 MXN';
+                requiereEspecializacion.classList.add('hidden');
+                btnContactar.disabled = true;
+            }
+        }
+
+        // Función principal de actualización
+        function actualizarCotizacion() {
+            cotizacionActual.tipoTarifa = tipoTarifa.value;
+            cotizacionActual.numeroHilos = numeroHilos.value;
+
+            actualizarResumenBasico();
+            calcularPrecio();
+        }
+
+        // Event listeners
+        tipoTarifa.addEventListener('change', actualizarCotizacion);
+        numeroHilos.addEventListener('change', actualizarCotizacion);
+
+        kwhInputs.forEach(input => {
+            input.addEventListener('input', actualizarCotizacion);
+        });
+
+        // Botón de contacto
+        btnContactar.addEventListener('click', function () {
+            if (!btnContactar.disabled) {
+                let mensaje = 'Cotización de Paneles Solares\n\n';
+                mensaje += `Tipo de tarifa: ${resumenTarifa.textContent}\n`;
+                mensaje += `Número de hilos: ${resumenHilos.textContent}\n`;
+                mensaje += `Promedio consumo: ${resumenPromedio.textContent}\n`;
+                mensaje += `Paneles necesarios: ${resumenPaneles.textContent}\n`;
+                mensaje += `Precio estimado: ${precioEstimado.textContent}\n`;
+                mensaje += `Descuento aplicado: 15%\n\n`;
+
+                mensaje += 'Consumo mensual:\n';
+                cotizacionActual.kwhValues.forEach((val, index) => {
+                    mensaje += `Mes ${index + 1}: ${val} kWH\n`;
+                });
+
+                alert(mensaje);
+
+                const whatsappUrl = `https://wa.me/2491110478?text=${encodeURIComponent(mensaje)}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        });
+
+        // Inicializar
+        actualizarCotizacion();
+    </script>
+
+</body>
+
+</html>
