@@ -7,5 +7,6 @@ router.get("/", indexController.renderIndexPage);
 
 router.get("/cotizador", indexController.renderQuoterPage);
 
+router.post("/cotizador", indexController.calculateQuote);
 
 export default router;

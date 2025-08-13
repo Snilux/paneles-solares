@@ -37,20 +37,6 @@
                             </h3>
                             <hr class="border-gray-200">
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
-                            <div class="space-y-2">
-                                <label for="tipoTarifa" class="block text-sm font-medium text-slate-700">
-                                    Categoria de tarifa eléctrica
-                                </label>
-                                <select id="tipoTarifa"
-                                    class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
-                                    <option value="">Selecciona tipo de tarifa</option>
-                                    <option value="domestica" data-precio="8000">Doméstica</option>
-                                    <option value="comercial" data-precio="7500">Comercial</option>
-                                    <option value="industrial" data-precio="7000">Industrial</option>
-                                </select>
-                            </div>
-                        </div>
 
                         <!-- Configuración básica -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -63,9 +49,9 @@
                                 <select id="tipoTarifa"
                                     class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
                                     <option value="">Selecciona tipo de tarifa</option>
-                                    <option value="domestica" data-precio="8000">Doméstica</option>
-                                    <option value="comercial" data-precio="7500">Comercial</option>
-                                    <option value="industrial" data-precio="7000">Industrial</option>
+                                    <% dataQuoter.forEach(type => {%>
+                                    <option value="<%= type.valor %>"> <%= type.valor %> </option>
+                                    <%})%>
                                 </select>
                             </div>
 
@@ -77,10 +63,22 @@
                                 <select id="numeroHilos"
                                     class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
                                     <option value="">Selecciona número de hilos</option>
-                                    <option value="2" data-factor="1">2 Hilos</option>
-                                    <option value="3" data-factor="1.2">3 Hilos</option>
-                                    <option value="4" data-factor="1.4">4 Hilos</option>
+                                    <option value="1">1 Hilos</option>
+                                    <option value="2">2 Hilos</option>
+                                    <option value="3">3 Hilos</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <!-- Agregando campo de distancia -->
+                        <div class="grid grid-cols-1 gap-6 mb-8">
+                            <div class="space-y-2">
+                                <label for="distanciaMedidor" class="block text-sm font-medium text-slate-700">
+                                    Distancia entre el medidor y la instalación (metros)
+                                </label>
+                                <input id="distanciaMedidor" type="number" min="0" step="0.1"
+                                    class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700"
+                                    placeholder="¿Cuál es la distancia entre el medidor y la instalación?">
                             </div>
                         </div>
 
@@ -187,19 +185,12 @@
                                 </span>
                             </div>
 
+                            <!-- Agregando distancia al resumen -->
                             <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-slate-600">Paneles:</span>
-                                <span id="resumenPaneles"
+                                <span class="text-sm font-medium text-slate-600">Distancia:</span>
+                                <span id="resumenDistancia"
                                     class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
-                                    0
-                                </span>
-                            </div>
-
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-slate-600">Descuento:</span>
-                                <span
-                                    class="text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-200">
-                                    15%
+                                    - metros
                                 </span>
                             </div>
                         </div>
@@ -207,21 +198,13 @@
                         <!-- Precio -->
                         <div class="mt-auto">
                             <hr class="border-gray-200 mb-6">
-                            <div class="text-center mb-6">
-                                <h4 class="text-lg font-medium text-slate-700 mb-2">Precio Estimado</h4>
-                                <div id="precioEstimado" class="text-3xl font-bold text-yellow-600 mb-2">$0 MXN</div>
-                                <p id="requiereEspecializacion" class="text-sm text-amber-600 hidden">
-                                    Requiere consulta personalizada
-                                </p>
-                                <div class="text-xs text-slate-500 mt-2">*Precio incluye descuento del 15%</div>
-                            </div>
 
                             <!-- Botón de contacto -->
                             <button id="btnContactar"
                                 class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 px-4 rounded-lg flex items-center justify-center transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                                 disabled>
                                 <i class="ri-mail-line mr-2"></i>
-                                Contactar con datos de Cotización
+                                Realizar Cotización
                             </button>
                         </div>
                     </div>
@@ -230,166 +213,461 @@
         </div>
     </div>
 
+    <!-- Modal de Cotización -->
+    <div id="modalCotizacion"
+        class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[85vh] overflow-y-auto">
+            <!-- Header del Modal -->
+            <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-t-lg">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-white text-green-500 p-2 rounded-full flex items-center justify-center">
+                            <i class="ri-check-line text-lg"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-xl font-bold">Cotización Generada</h2>
+                            <p class="text-green-100 text-sm">Estimado aproximado de tu sistema solar</p>
+                        </div>
+                    </div>
+                    <button id="cerrarModal" class="text-white hover:text-green-200 transition-colors">
+                        <i class="ri-close-line text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenido del Modal -->
+            <div class="p-4">
+                <!-- Advertencia de aproximado -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+                    <div class="flex items-start gap-3">
+                        <i class="ri-information-line text-yellow-600 text-lg mt-0.5"></i>
+                        <div>
+                            <h4 class="font-semibold text-yellow-800 mb-1">Estimado Aproximado</h4>
+                            <p class="text-yellow-700 text-sm">
+                                Esta cotización es un <strong>estimado aproximado</strong> basado en los datos
+                                proporcionados.
+                                Los precios finales pueden variar según las condiciones específicas de la instalación.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grid de información -->
+                <div class="bg-slate-50 rounded-lg p-6 mb-6">
+                    <!-- Información del Sistema -->
+
+                    <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="ri-sun-line text-yellow-500"></i>
+                        Tu Sistema Solar Incluye:
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
+
+                        
+
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                            <span class="text-slate-600 text-sm">Número de Paneles:</span>
+                            <span id="modalPaneles" class="font-semibold text-slate-800 text-sm">-</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                            <span class="text-slate-600 text-sm">Tipo de Paneles:</span>
+                            <span id="modalTipoPaneles" class="font-semibold text-slate-800 text-sm">-</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                            <span class="text-slate-600 text-sm">Precio Paneles:</span>
+                            <span id="modalPrecioPaneles" class="font-semibold text-green-600 text-sm">-</span>
+                        </div>
+                    </div>
+
+
+                    <!-- Información de Estructuras -->
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-1">
+                            <i class="ri-building-line text-blue-500 mr-2"></i>
+                            Estructuras
+                        </h3>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Precio Estructuras:</span>
+                                <span id="modalPrecioEstructuras" class="font-semibold text-green-600 text-sm">-</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Ancho:</span>
+                                <span id="modalAncho" class="font-semibold text-slate-800 text-sm">-</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Alto:</span>
+                                <span id="modalAlto" class="font-semibold text-slate-800 text-sm">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información del Inversor -->
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-1">
+                            <i class="ri-flashlight-line text-purple-500 mr-2"></i>
+                            Inversor
+                        </h3>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Capacidad:</span>
+                                <span id="modalCapacidadInversor" class="font-semibold text-slate-800 text-sm">-</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Precio Inversor:</span>
+                                <span id="modalPrecioInversor" class="font-semibold text-green-600 text-sm">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información de Cableado -->
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-1">
+                            <i class="ri-plug-line text-orange-500 mr-2"></i>
+                            Cableado
+                        </h3>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Distancia:</span>
+                                <span id="modalDistancia" class="font-semibold text-slate-800 text-sm">-</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Tipo de Tubería:</span>
+                                <span id="modalTipoTuberia" class="font-semibold text-slate-800 text-sm">-</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Precio Tubería:</span>
+                                <span id="modalPrecioTuberia" class="font-semibold text-green-600 text-sm">-</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Total Cable:</span>
+                                <span id="modalTotalCable" class="font-semibold text-slate-800 text-sm">-</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                <span class="text-slate-600 text-sm">Precio Cable:</span>
+                                <span id="modalPrecioCable" class="font-semibold text-green-600 text-sm">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Precio Total -->
+                <div class="mt-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4 border border-green-200">
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-1">Precio Total Estimado</h3>
+                        <div class="text-2xl font-bold text-green-600 mb-1">
+                            $<span id="modalPrecioTotal">0.00</span>
+                        </div>
+                        <p class="text-xs text-slate-600">
+                            <i class="ri-information-line mr-1"></i>
+                            Precio aproximado sujeto a confirmación técnica
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="mt-4 flex flex-col sm:flex-row gap-2 justify-end">
+                    <button id="btnNoEsLoBuscas"
+                        class="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors text-sm">
+                        <i class="ri-search-line mr-1"></i>
+                        ¿No es lo que buscas?
+                    </button>
+                    <button id="btnContactarVendedor"
+                        class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm">
+                        <i class="ri-save-line mr-1"></i>
+                        Guardar Cotización
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Contacto -->
+    <div id="modalContacto"
+        class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <!-- Header del Modal -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-t-lg">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-white text-blue-500 p-2 rounded-full flex items-center justify-center">
+                            <i class="ri-phone-line text-lg"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-lg font-bold">¿Necesitas algo diferente?</h2>
+                            <p class="text-blue-100 text-sm">Te ayudamos a encontrar la solución perfecta</p>
+                        </div>
+                    </div>
+                    <button id="cerrarModalContacto" class="text-white hover:text-blue-200 transition-colors">
+                        <i class="ri-close-line text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenido del Modal -->
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <i class="ri-customer-service-2-line text-4xl text-blue-500 mb-3"></i>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Contáctanos Directamente</h3>
+                    <p class="text-slate-600 text-sm">
+                        Nuestros expertos en energía solar están listos para ayudarte a diseñar
+                        el sistema perfecto para tus necesidades específicas.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-slate-50 rounded-lg p-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="ri-phone-line text-green-500"></i>
+                            <span class="font-medium text-slate-800">Llámanos</span>
+                        </div>
+                        <p class="text-slate-600 text-sm ml-6">+52 (555) 123-4567</p>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-lg p-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="ri-mail-line text-blue-500"></i>
+                            <span class="font-medium text-slate-800">Escríbenos</span>
+                        </div>
+                        <p class="text-slate-600 text-sm ml-6">ventas@soluciontecnologica.net</p>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-lg p-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="ri-whatsapp-line text-green-500"></i>
+                            <span class="font-medium text-slate-800">WhatsApp</span>
+                        </div>
+                        <p class="text-slate-600 text-sm ml-6">+52 (555) 987-6543</p>
+                    </div>
+                </div>
+
+                <!-- Botón de acción -->
+                <div class="mt-6">
+                    <button id="btnIrContacto"
+                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                        <i class="ri-external-link-line mr-2"></i>
+                        Ir a Página de Contacto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./partials/quoter-per.ejs') %>
+
     <script>
-        // Elementos del DOM
-        const tipoTarifa = document.getElementById('tipoTarifa');
-        const numeroHilos = document.getElementById('numeroHilos');
-        const kwhInputs = document.querySelectorAll('.kwh-input');
+        let data;
 
-        // Elementos de resumen
-        const resumenTarifa = document.getElementById('resumenTarifa');
-        const resumenHilos = document.getElementById('resumenHilos');
-        const resumenPromedio = document.getElementById('resumenPromedio');
-        const resumenPaneles = document.getElementById('resumenPaneles');
-        const precioEstimado = document.getElementById('precioEstimado');
-        const requiereEspecializacion = document.getElementById('requiereEspecializacion');
-        const btnContactar = document.getElementById('btnContactar');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Referencias a los elementos del formulario
+            const tipoTarifaSelect = document.getElementById('tipoTarifa');
+            const numeroHilosSelect = document.getElementById('numeroHilos');
+            const distanciaMedidorInput = document.getElementById('distanciaMedidor'); // Nueva referencia
+            const kwhInputs = document.querySelectorAll('.kwh-input');
 
-        // Estado actual
-        let cotizacionActual = {
-            tipoTarifa: '',
-            numeroHilos: '',
-            kwhValues: [0, 0, 0, 0, 0, 0],
-            promedioKwh: 0,
-            numeroPaneles: 0,
-            precioFinal: 0
-        };
+            // Referencias a los elementos del resumen
+            const resumenTarifa = document.getElementById('resumenTarifa');
+            const resumenHilos = document.getElementById('resumenHilos');
+            const resumenPromedio = document.getElementById('resumenPromedio');
+            const resumenDistancia = document.getElementById('resumenDistancia'); // Nueva referencia
+            const btnContactar = document.getElementById('btnContactar');
 
-        // Función para actualizar el resumen básico
-        function actualizarResumenBasico() {
-            // Actualizar tarifa
-            const tarifaTexto = tipoTarifa.value === 'domestica' ? 'Doméstica' :
-                tipoTarifa.value === 'comercial' ? 'Comercial' :
-                    tipoTarifa.value === 'industrial' ? 'Industrial' : '-';
-            resumenTarifa.textContent = tarifaTexto;
+            // Función para actualizar el resumen
+            function actualizarResumen() {
+                // Actualizar tarifa
+                const tarifaSeleccionada = tipoTarifaSelect.value;
+                const tarifaTexto = tipoTarifaSelect.options[tipoTarifaSelect.selectedIndex].text;
+                resumenTarifa.textContent = tarifaSeleccionada ? tarifaTexto : '-';
 
-            // Actualizar hilos
-            resumenHilos.textContent = numeroHilos.value ? numeroHilos.value + ' Hilos' : '-';
-        }
+                // Actualizar hilos
+                const hilosSeleccionados = numeroHilosSelect.value;
+                resumenHilos.textContent = hilosSeleccionados ? `${hilosSeleccionados} Hilos` : '-';
 
-        // Función para calcular promedio de kWH
-        function calcularPromedio() {
-            const valores = Array.from(kwhInputs).map(input => parseFloat(input.value) || 0);
-            const promedio = valores.reduce((sum, val) => sum + val, 0) / 6;
+                const distanciaSeleccionada = parseFloat(distanciaMedidorInput.value) || 0;
+                resumenDistancia.textContent = distanciaSeleccionada > 0 ? `${distanciaSeleccionada} metros` : '- metros';
 
-            cotizacionActual.kwhValues = valores;
-            cotizacionActual.promedioKwh = promedio;
+                // Calcular promedio de kWH
+                let totalKwh = 0;
+                let mesesConDatos = 0;
 
-            resumenPromedio.textContent = promedio.toFixed(1) + ' kWH';
-
-            return promedio;
-        }
-
-        // Función para calcular número de paneles
-        function calcularPaneles(promedioKwh) {
-            // Constantes para el cálculo
-            const wattsPanel = 580; // watts por panel
-            const horasSol = 5; // horas de sol promedio
-            const diasMes = 30; // días por mes
-
-            // Calcular energía mensual en WH
-            const energiaMensual = promedioKwh * 1000;
-
-            // Calcular energía que produce un panel al mes
-            const energiaPorPanel = wattsPanel * horasSol * diasMes;
-
-            // Calcular paneles necesarios
-            const panelesNecesarios = Math.ceil(energiaMensual / energiaPorPanel);
-
-            cotizacionActual.numeroPaneles = panelesNecesarios;
-            resumenPaneles.textContent = panelesNecesarios.toString();
-
-            return panelesNecesarios;
-        }
-
-        // Función para calcular precio final
-        function calcularPrecio() {
-            const promedio = calcularPromedio();
-            const paneles = calcularPaneles(promedio);
-
-            // Verificar si el formulario está completo
-            const isFormComplete = tipoTarifa.value && numeroHilos.value &&
-                cotizacionActual.kwhValues.some(val => val > 0);
-
-            if (isFormComplete && paneles > 0) {
-                // Obtener precio por panel según tarifa
-                const selectedTarifaOption = tipoTarifa.options[tipoTarifa.selectedIndex];
-                const precioPorPanel = parseFloat(selectedTarifaOption.dataset.precio) || 0;
-
-                // Obtener factor por número de hilos
-                const selectedHilosOption = numeroHilos.options[numeroHilos.selectedIndex];
-                const factorHilos = parseFloat(selectedHilosOption.dataset.factor) || 1;
-
-                // Calcular costo total
-                let costoTotal = paneles * precioPorPanel * factorHilos;
-
-                // Aplicar descuento del 15%
-                costoTotal = costoTotal * 0.85;
-
-                cotizacionActual.precioFinal = costoTotal;
-
-                // Verificar si requiere especialización
-                if (costoTotal > 500000 || paneles > 50) {
-                    requiereEspecializacion.classList.remove('hidden');
-                    precioEstimado.textContent = 'Consulta personalizada';
-                } else {
-                    requiereEspecializacion.classList.add('hidden');
-                    precioEstimado.textContent = `$${costoTotal.toLocaleString('es-MX', {
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0
-                    })} MXN`;
-                }
-
-                btnContactar.disabled = false;
-            } else {
-                precioEstimado.textContent = '$0 MXN';
-                requiereEspecializacion.classList.add('hidden');
-                btnContactar.disabled = true;
-            }
-        }
-
-        // Función principal de actualización
-        function actualizarCotizacion() {
-            cotizacionActual.tipoTarifa = tipoTarifa.value;
-            cotizacionActual.numeroHilos = numeroHilos.value;
-
-            actualizarResumenBasico();
-            calcularPrecio();
-        }
-
-        // Event listeners
-        tipoTarifa.addEventListener('change', actualizarCotizacion);
-        numeroHilos.addEventListener('change', actualizarCotizacion);
-
-        kwhInputs.forEach(input => {
-            input.addEventListener('input', actualizarCotizacion);
-        });
-
-        // Botón de contacto
-        btnContactar.addEventListener('click', function () {
-            if (!btnContactar.disabled) {
-                let mensaje = 'Cotización de Paneles Solares\n\n';
-                mensaje += `Tipo de tarifa: ${resumenTarifa.textContent}\n`;
-                mensaje += `Número de hilos: ${resumenHilos.textContent}\n`;
-                mensaje += `Promedio consumo: ${resumenPromedio.textContent}\n`;
-                mensaje += `Paneles necesarios: ${resumenPaneles.textContent}\n`;
-                mensaje += `Precio estimado: ${precioEstimado.textContent}\n`;
-                mensaje += `Descuento aplicado: 15%\n\n`;
-
-                mensaje += 'Consumo mensual:\n';
-                cotizacionActual.kwhValues.forEach((val, index) => {
-                    mensaje += `Mes ${index + 1}: ${val} kWH\n`;
+                kwhInputs.forEach(input => {
+                    const valor = parseFloat(input.value) || 0;
+                    if (valor > 0) {
+                        totalKwh += valor;
+                        mesesConDatos++;
+                    }
                 });
 
-                alert(mensaje);
+                const promedio = mesesConDatos > 0 ? (totalKwh / mesesConDatos).toFixed(1) : 0;
+                resumenPromedio.textContent = `${promedio} kWH`;
 
-                const whatsappUrl = `https://wa.me/2491110478?text=${encodeURIComponent(mensaje)}`;
-                window.open(whatsappUrl, '_blank');
+                data = {
+                    rates: tarifaSeleccionada,
+                    threads: parseInt(hilosSeleccionados),
+                    distance: distanciaSeleccionada,
+                    average: parseFloat(promedio),
+                };
+
+                const formularioCompleto = tarifaSeleccionada && hilosSeleccionados && mesesConDatos > 5 && distanciaSeleccionada > 0;
+                btnContactar.disabled = !formularioCompleto;
+
+                if (formularioCompleto) {
+                    btnContactar.classList.remove('opacity-50', 'cursor-not-allowed');
+                    btnContactar.classList.add('hover:bg-yellow-700');
+                } else {
+                    btnContactar.classList.add('opacity-50', 'cursor-not-allowed');
+                    btnContactar.classList.remove('hover:bg-yellow-700');
+                }
             }
-        });
 
-        // Inicializar
-        actualizarCotizacion();
+            function mostrarAlertaCotizacionPersonalizada() {
+                document.getElementById('modalCotizacionPersonalizada').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            document.getElementById('cerrarModalPersonalizada').addEventListener('click', cerrarModalPersonalizada);
+
+            // Event listeners para actualizar el resumen en tiempo real
+            tipoTarifaSelect.addEventListener('change', actualizarResumen);
+            numeroHilosSelect.addEventListener('change', actualizarResumen);
+            distanciaMedidorInput.addEventListener('input', actualizarResumen); // Nuevo event listener
+            distanciaMedidorInput.addEventListener('change', actualizarResumen); // Nuevo event listener
+
+            // Event listeners para los inputs de kWH
+            kwhInputs.forEach(input => {
+                input.addEventListener('input', actualizarResumen);
+                input.addEventListener('change', actualizarResumen);
+            });
+
+            // Inicializar el resumen
+            actualizarResumen();
+
+            btnContactar.addEventListener('click', async function () {
+                if (!btnContactar.disabled) {
+                    try {
+                        console.log(data);
+
+                        // Mostrar loading
+                        btnContactar.innerHTML = '<i class="ri-loader-4-line mr-2 animate-spin"></i>Calculando...';
+                        btnContactar.disabled = true;
+
+                        // Simular llamada a API (reemplazar con tu endpoint real)
+                        const response = await fetch('/cotizador', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        // Para demo, usar datos de ejemplo si la API falla
+                        let cotizacionData;
+                        console.log(response);
+
+                        if (!response.ok) {
+                            mostrarAlertaCotizacionPersonalizada();
+                            const errorData = await response.json();
+                        } else {
+                            cotizacionData = await response.json();
+                            mostrarModalCotizacion(cotizacionData);
+                        }
+
+                    } catch (error) {
+                        console.error('Error al obtener cotización:', error);
+                        alert('Error al generar la cotización. Por favor, intenta nuevamente.');
+                    } finally {
+                        // Restaurar botón
+                        btnContactar.innerHTML = '<i class="ri-mail-line mr-2"></i>Realizar Cotización';
+                        btnContactar.disabled = false;
+                    }
+                }
+            });
+
+            function cerrarModalPersonalizada() {
+                document.getElementById('modalCotizacionPersonalizada').classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            document.getElementById('modalCotizacionPersonalizada').addEventListener('click', function (e) {
+                if (e.target === this) {
+                    cerrarModalPersonalizada();
+                }
+            });
+
+            function mostrarModalCotizacion(cotizacionData) {
+                // Llenar los datos en el modal
+                document.getElementById('modalPaneles').textContent = cotizacionData.numberOfPanels || '-';
+                document.getElementById('modalTipoPaneles').textContent = cotizacionData.typeOfPanels ? `${cotizacionData.typeOfPanels}W` : '-';
+                document.getElementById('modalPrecioPaneles').textContent = cotizacionData.priceOfPanelsTotal ? `$${cotizacionData.priceOfPanelsTotal.toLocaleString()}` : '-';
+
+                document.getElementById('modalPrecioEstructuras').textContent = cotizacionData.priceOfStructures ? `$${cotizacionData.priceOfStructures.toLocaleString()}` : '-';
+                document.getElementById('modalAncho').textContent = cotizacionData.widthForStructure ? `${cotizacionData.widthForStructure}m` : '-';
+                document.getElementById('modalAlto').textContent = cotizacionData.heightForStructure ? `${cotizacionData.heightForStructure}m` : '-';
+
+                document.getElementById('modalCapacidadInversor').textContent = cotizacionData.invertorCapacity || '-';
+                document.getElementById('modalPrecioInversor').textContent = cotizacionData.invertorPrice ? `$${parseFloat(cotizacionData.invertorPrice).toLocaleString()}` : '-';
+
+                document.getElementById('modalDistancia').textContent = cotizacionData.distance ? `${cotizacionData.distance}m` : '-';
+                document.getElementById('modalTipoTuberia').textContent = cotizacionData.typeOfPipe || '-';
+                document.getElementById('modalPrecioTuberia').textContent = cotizacionData.priceTotalOfPipe ? `$${cotizacionData.priceTotalOfPipe.toLocaleString()}` : '-';
+                document.getElementById('modalTotalCable').textContent = cotizacionData.totalWire ? `${cotizacionData.totalWire}m` : '-';
+                document.getElementById('modalPrecioCable').textContent = cotizacionData.priceOfWire ? `$${cotizacionData.priceOfWire.toLocaleString()}` : '-';
+
+                document.getElementById('modalPrecioTotal').textContent = cotizacionData.priceTotal ? cotizacionData.priceTotal.toLocaleString() : '0.00';
+
+                // Mostrar el modal
+                document.getElementById('modalCotizacion').classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+            }
+
+            document.getElementById('cerrarModal').addEventListener('click', cerrarModal);
+            document.getElementById('btnNoEsLoBuscas').addEventListener('click', function () {
+                // Cerrar modal de cotización y abrir modal de contacto
+                cerrarModal();
+                document.getElementById('modalContacto').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+
+
+            document.getElementById('btnContactarVendedor').addEventListener('click', function () {
+                alert('Redirigiendo a contacto con vendedor - próximamente');
+            });
+
+            document.getElementById('cerrarModalContacto').addEventListener('click', cerrarModalContacto);
+            document.getElementById('btnIrContacto').addEventListener('click', function () {
+                // Aquí puedes redirigir a la página de contacto
+                window.location.href = '/contacto'; // Ajusta la URL según tu estructura
+            });
+
+            // Cerrar modal de contacto al hacer clic fuera de él
+            document.getElementById('modalContacto').addEventListener('click', function (e) {
+                if (e.target === this) {
+                    cerrarModalContacto();
+                }
+            });
+
+            function cerrarModal() {
+                document.getElementById('modalCotizacion').classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Restaurar scroll del body
+            }
+
+            function cerrarModalContacto() {
+                document.getElementById('modalContacto').classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    cerrarModal();
+                    cerrarModalContacto();
+                    cerrarModalPersonalizada();
+                }
+            });
+        });
     </script>
 
 </body>

@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRoutes);
 
 app.use((req, res) => {
-  res.status(404).render("error", { title: "Error" });
+  res.status(404).render("error", { title: "Error", message: "Not found" });
 });
 
 export default app;
