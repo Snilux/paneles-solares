@@ -21,6 +21,13 @@ app.set("view engine", "ejs");
 app.use(logger("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use((req, res, next) => {
+  const protocol = req.protocol;
+  const host = req.get("host"); // localhost:3000 o dominio real
+  res.locals.baseUrl = `${protocol}://${host}`;
+  next();
+});
+
 // Config routes
 app.use("/", indexRoutes);
 

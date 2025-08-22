@@ -1,11 +1,20 @@
-import getConnection from "../db.js";
-import quoterModel from "../models/quoter-model.js";
 import { validateQuoteSchema } from "../schemas/quoter.js";
+import {
+  validateCostumerSchema,
+  validateEmailSchema,
+} from "../schemas/customer.js";
+
+import quoterModel from "../models/quoter-model.js";
+import CostumerModel from "../models/costumer-model.js";
+import sendContactEmail from "../utils/sendContactEmail.js";
+
+import dotenv from "dotenv";
+dotenv.config();
 
 class indexController {
   async renderIndexPage(req, res) {
     res.render("index", {
-      title: "Soluciones tecnologicas .net",
+      title: "Ahorra Con Paneles Solares",
     });
   }
 
@@ -26,7 +35,6 @@ class indexController {
 
   async calculateQuote(req, res) {
     const dataQuote = validateQuoteSchema(req.body);
-    const connection = await getConnection();
 
     if (!dataQuote.success) {
       return res.status(400).json({
@@ -35,6 +43,13 @@ class indexController {
     }
     const { average, distance, rates, threads } = dataQuote.data;
     let quoteResult = true;
+    let especialRates = ["gdmth", "gdmto", "gdbt"];
+    let requireUVIEAndUIIE = false;
+
+    if (especialRates.includes(rates.toLowerCase())) {
+      requireUVIEAndUIIE = true;
+    }
+
     if (distance > 15 || rates.toLowerCase() === "otro" || threads > 3) {
       quoteResult = false;
     }
@@ -148,6 +163,10 @@ class indexController {
         totalWire,
         priceOfWire,
         priceTotal: gains,
+        requireUVIEAndUIIE,
+        rates,
+        average,
+        threads,
       });
     } catch (error) {
       console.log("Error calculating quote:", error);
@@ -155,8 +174,129 @@ class indexController {
         message:
           "Ocurrió un error al calcular la cotización. Inténtalo de nuevo más tarde.",
       });
-    } finally {
-      connection.release();
+    }
+  }
+
+  async saveQuoteData(req, res) {
+    const customerData = {
+      name: req.body.name,
+      phone: req.body.phone,
+      email: req.body.email,
+      address: req.body.address,
+    };
+
+    const customerValid = validateCostumerSchema(customerData);
+
+    if (!customerValid.success) {
+      const flatErrors = Object.values(
+        customerValid.error.flatten().fieldErrors
+      ).flat();
+
+      return res.status(400).json({
+        error: "Datos del cliente inválidos",
+        messages: flatErrors,
+      });
+    }
+
+    const costumerExists = await CostumerModel.findCostumerByEmail(
+      customerValid.data
+    );
+    let idCostumer;
+    if (costumerExists === null) {
+      //If the customer does not exist, save the customer data
+
+      const saveCostumer = await CostumerModel.saveCostumerData(
+        customerValid.data
+      );
+      if (saveCostumer.success === false) {
+        return res.status(500).json({
+          errorMessage: "Error al guardar los datos del cliente",
+          error: saveCostumer.error,
+        });
+      }
+      idCostumer = saveCostumer.id;
+    } else {
+      //If the customer exists, save the quote data with the existing customer ID
+      idCostumer = costumerExists.id;
+    }
+
+    console.log(req.body.cotizacionData);
+    const saveQuote = await quoterModel.saveQuotePanel(
+      idCostumer,
+      req.body.cotizacionData
+    );
+
+    if (saveQuote.success === false) {
+      return res.status(500).json({
+        errorMessage: "Error al guardar la cotización de cámaras",
+        error: saveQuote,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      successMessage:
+        "Hemos recibido tu pedido. Te contactaremos pronto para coordinar la instalación.",
+    });
+  }
+
+  async sendEmail(req, res) {
+    const captchaToken = req.body["g-recaptcha-response"];
+
+    if (!captchaToken) {
+      return res.status(400).json({
+        error: "Por favor, completa el reCAPTCHA.",
+      });
+    }
+
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+    try {
+      const verificationRes = await fetch(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`,
+        {
+          method: "POST",
+        }
+      );
+
+      const captchaResult = await verificationRes.json();
+
+      if (!captchaResult.success) {
+        return res.status(403).json({
+          error: "Falló la verificación del reCAPTCHA. Inténtalo de nuevo.",
+        });
+      }
+
+      const validateEmail = validateEmailSchema(req.body);
+
+      if (!validateEmail.success) {
+        const flatErrors = Object.values(
+          validateEmail.error.flatten().fieldErrors
+        ).flat();
+
+        return res.status(400).json({
+          error: "Datos del cliente inválidos",
+          message: flatErrors,
+        });
+      }
+
+      const { name, email, phone, message } = validateEmail.data;
+
+      const mailRes = await sendContactEmail({ name, email, phone, message });
+
+      if (!mailRes.success) {
+        return res.status(500).json({
+          error: "No se pudo enviar el correo. Inténtalo más tarde.",
+        });
+      }
+
+      return res.status(200).json({
+        message:
+          "Se ha enviado el correo correctamente, te contactaremos en breve!",
+      });
+    } catch (error) {
+      console.error("Error en reCAPTCHA o al enviar correo:", error);
+      return res.status(500).json({ error: "Error interno del servidor" });
     }
   }
 }

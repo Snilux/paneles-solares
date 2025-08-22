@@ -1,8 +1,571 @@
 <%- include('./partials/head.ejs') %>
 
-<body class="bg-gray-500">
-    <h1 class="text-4xl">Index</h1>
-    <a href="/cotizador">cotizador</a>
+<body class="bg-gray-50">
+    <!-- Header/Hero Section -->
+    <%- include('./partials/header.ejs') %>
+    <!-- About Section -->
+    <section id="nosotros" class="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Image -->
+                <div class="relative order-2 lg:order-1">
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=500&q=80"
+                            alt="Equipo de instalación de paneles solares" class="w-full h-auto object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
+                    </div>
+                    <!-- Decorative elements -->
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/10 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-cyan-500/10 rounded-full blur-xl"></div>
+                </div>
+
+                <!-- Content -->
+                <div class="order-1 lg:order-2">
+                    <div class="mb-8">
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Quiénes somos</h2>
+                        <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+                    </div>
+
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 lg:p-8 shadow-xl border border-white/20">
+                        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                            Somos <span class="font-semibold text-blue-600">Soluciones Tecnológicas</span>, una
+                            empresa
+                            dedicada a hacer que la energía renovable sea accesible para todos.
+                        </p>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Nuestra misión es ayudarte a reducir tus costos de electricidad y contribuir a un futuro más
+                            sostenible
+                            a través de la instalación de paneles solares de alta calidad.
+                        </p>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-4 mt-8">
+                        <div class="text-center">
+                            <div class="text-2xl lg:text-3xl font-bold text-blue-600">500+</div>
+                            <div class="text-sm text-gray-600">Instalaciones</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl lg:text-3xl font-bold text-blue-600">10+</div>
+                            <div class="text-sm text-gray-600">Años experiencia</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl lg:text-3xl font-bold text-blue-600">98%</div>
+                            <div class="text-sm text-gray-600">Satisfacción</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <!-- <section id="productos" class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Nuestros Productos</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mx-auto mb-6"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Descubre nuestra amplia gama de paneles solares y kits completos para todas tus necesidades
+                    energéticas
+                </p>
+            </div>
+
+            <div id="products-grid"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+            </div>
+
+            <div class="text-center mt-12">
+                <button id="show-more-btn"
+                    class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                    Ver más productos <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Tips Section -->
+    <section id="consejos" class="py-20 bg-gradient-to-br from-slate-800 to-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-white mb-6">
+                    Consejos de
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
+                        Expertos
+                    </span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Maximiza el rendimiento de tu sistema solar con estos consejos profesionales
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div
+                    class="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-105 group">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="p-3 bg-slate-600/50 rounded-xl group-hover:bg-slate-600/70 transition-colors duration-300">
+                            <i data-lucide="sun" class="w-8 h-8 text-yellow-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white ml-4">Orientación óptima</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">Los paneles deben orientarse hacia el sur con una
+                        inclinación de 30-45° para máxima eficiencia.</p>
+                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                        <p class="text-blue-300 text-sm font-medium">💡 En México, la orientación sur con 20° de
+                            inclinación es ideal para la mayoría de las regiones.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-105 group">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="p-3 bg-slate-600/50 rounded-xl group-hover:bg-slate-600/70 transition-colors duration-300">
+                            <i data-lucide="battery" class="w-8 h-8 text-green-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white ml-4">Mantenimiento regular</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">Limpia los paneles cada 3-6 meses y revisa las
+                        conexiones para mantener el rendimiento.</p>
+                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                        <p class="text-blue-300 text-sm font-medium">💡 Una limpieza simple con agua y jabón neutro
+                            puede aumentar la eficiencia hasta un 15%.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-105 group">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="p-3 bg-slate-600/50 rounded-xl group-hover:bg-slate-600/70 transition-colors duration-300">
+                            <i data-lucide="zap" class="w-8 h-8 text-blue-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white ml-4">Monitoreo de consumo</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">Instala un sistema de monitoreo para optimizar tu
+                        consumo energético diario.</p>
+                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                        <p class="text-blue-300 text-sm font-medium">💡 Los sistemas inteligentes te permiten
+                            identificar los mejores horarios para usar electrodomésticos.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-105 group">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="p-3 bg-slate-600/50 rounded-xl group-hover:bg-slate-600/70 transition-colors duration-300">
+                            <i data-lucide="shield" class="w-8 h-8 text-purple-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white ml-4">Protección contra clima</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">Asegúrate de que tu instalación esté preparada para
+                        condiciones climáticas extremas.</p>
+                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                        <p class="text-blue-300 text-sm font-medium">💡 Los paneles de calidad pueden resistir granizo
+                            de hasta 25mm de diámetro.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-105 group">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="p-3 bg-slate-600/50 rounded-xl group-hover:bg-slate-600/70 transition-colors duration-300">
+                            <i data-lucide="trending-up" class="w-8 h-8 text-cyan-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white ml-4">Dimensionamiento correcto</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">Calcula correctamente el tamaño del sistema según tu
+                        consumo energético real.</p>
+                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                        <p class="text-blue-300 text-sm font-medium">💡 Un sistema sobredimensionado puede ser costoso,
+                            mientras que uno pequeño no cubrirá tus necesidades.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-105 group">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="p-3 bg-slate-600/50 rounded-xl group-hover:bg-slate-600/70 transition-colors duration-300">
+                            <i data-lucide="lightbulb" class="w-8 h-8 text-orange-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white ml-4">Aprovecha incentivos</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4 leading-relaxed">Investiga los programas gubernamentales y incentivos
+                        fiscales disponibles en tu región.</p>
+                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                        <p class="text-blue-300 text-sm font-medium">💡 En México puedes deducir hasta el 100% de la
+                            inversión en el primer año fiscal.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <div
+                    class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-2xl p-8 max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold text-white mb-4">¿Necesitas una evaluación personalizada?</h3>
+                    <p class="text-gray-300 mb-6">
+                        Nuestros expertos pueden ayudarte a diseñar el sistema solar perfecto para tu hogar o negocio
+                    </p>
+                    <a href="/cotizador"
+                        class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                        <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                        Obtener cotización gratuita
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="beneficios" class="py-16 lg:py-24 bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                    ¿Por qué elegir energía solar?
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mx-auto mb-6"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Descubre todos los beneficios que la energía solar puede ofrecerte a ti y a tu familia
+                </p>
+            </div>
+
+            <!-- Benefits Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div class="mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="dollar-sign" class="w-8 h-8 text-white"></i>
+                        </div>
+                    </div>
+                    <h3
+                        class="text-xl font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-200">
+                        Ahorro en tu factura eléctrica
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">Reduce hasta un 90% en tus costos de electricidad con
+                        nuestros sistemas solares eficientes.</p>
+                    <div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div class="mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="leaf" class="w-8 h-8 text-white"></i>
+                        </div>
+                    </div>
+                    <h3
+                        class="text-xl font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-200">
+                        Amigable con el medio ambiente
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">Contribuye a un planeta más limpio reduciendo tu huella de
+                        carbono significativamente.</p>
+                    <div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div class="mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="wrench" class="w-8 h-8 text-white"></i>
+                        </div>
+                    </div>
+                    <h3
+                        class="text-xl font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-200">
+                        Fácil instalación y mantenimiento
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">Proceso de instalación rápido y mantenimiento mínimo para
+                        máxima tranquilidad.</p>
+                    <div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div class="mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="shield" class="w-8 h-8 text-white"></i>
+                        </div>
+                    </div>
+                    <h3
+                        class="text-xl font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-200">
+                        Garantía extendida
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">Todos nuestros productos incluyen garantía de hasta 25 años
+                        para tu tranquilidad.</p>
+                    <div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div class="mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="trending-up" class="w-8 h-8 text-white"></i>
+                        </div>
+                    </div>
+                    <h3
+                        class="text-xl font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-200">
+                        Aumenta el valor de tu propiedad
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">Los paneles solares incrementan el valor de tu hogar hasta
+                        en un 15%.</p>
+                    <div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div class="mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="zap" class="w-8 h-8 text-white"></i>
+                        </div>
+                    </div>
+                    <h3
+                        class="text-xl font-semibold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-200">
+                        Energía confiable 24/7
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">Sistema de respaldo con baterías para energía continua
+                        incluso durante cortes.</p>
+                    <div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-16">
+                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl p-8 text-white">
+                    <h3 class="text-2xl lg:text-3xl font-bold mb-4">¿Listo para hacer el cambio?</h3>
+                    <p class="text-xl mb-6 opacity-90">
+                        Únete a miles de familias que ya están ahorrando con energía solar
+                    </p>
+                    <a href="/cotizador"
+                        class="bg-white text-blue-600 font-semibold py-3 px-8 rounded-full hover:bg-gray-100 transition-colors duration-200 transform hover:scale-105">
+                        Solicita tu cotización gratuita
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-16 lg:py-24 bg-gradient-to-br from-gray-900 via-blue-900 to-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">Contáctanos</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mx-auto mb-6"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    ¿Listo para comenzar tu proyecto solar? Contáctanos y te ayudaremos a encontrar la mejor solución
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+                <!-- Contact Form -->
+                <div class="order-2 lg:order-1">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+                        <h3 class="text-2xl font-semibold text-white mb-6">Envíanos un mensaje</h3>
+
+                        <form id="contact-form" class="space-y-6">
+                            <!-- Name Field -->
+                            <div class="group">
+                                <label for="nombre" class="flex items-center text-gray-300 mb-2 font-medium">
+                                    <i data-lucide="user" class="w-5 h-5 mr-2 text-blue-400"></i>
+                                    Nombre
+                                </label>
+                                <input type="text" id="name" name="nombre" placeholder="Tu nombre completo" required
+                                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200">
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="group">
+                                <label for="email" class="flex items-center text-gray-300 mb-2 font-medium">
+                                    <i data-lucide="mail" class="w-5 h-5 mr-2 text-blue-400"></i>
+                                    Correo electrónico
+                                </label>
+                                <input type="email" id="email" name="email" placeholder="tu@email.com" required
+                                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200">
+                            </div>
+
+                            <!-- Phone Field -->
+                            <div class="group">
+                                <label for="telefono" class="flex items-center text-gray-300 mb-2 font-medium">
+                                    <i data-lucide="phone" class="w-5 h-5 mr-2 text-blue-400"></i>
+                                    Teléfono
+                                </label>
+                                <input type="tel" id="phone" name="telefono" placeholder="Tu número de teléfono"
+                                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200">
+                            </div>
+
+                            <!-- Message Field -->
+                            <div class="group">
+                                <label for="mensaje" class="flex items-center text-gray-300 mb-2 font-medium">
+                                    <i data-lucide="message-circle" class="w-5 h-5 mr-2 text-blue-400"></i>
+                                    Mensaje
+                                </label>
+                                <textarea id="message" name="mensaje" placeholder="¿En qué podemos ayudarte?" rows="4"
+                                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 resize-none"></textarea>
+                            </div>
+
+                            <div class="g-recaptcha" data-sitekey="6Lez-J0rAAAAAAGYAOjZZxjPugCODSqz87aNqr7G"></div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" id="SendEmailBtn"
+                                class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                                Enviar mensaje
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="order-1 lg:order-2">
+                    <div
+                        class="bg-white/10 backdrop-blur-md rounded-2xl p-2 border border-white/20 h-full min-h-[500px]">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.1239659393727!2d-98.25282432574869!3d19.0582864525303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc7cd700fb459%3A0xf340412d183f331b!2sSoluciones%20Tecnol%C3%B3gicas.Net!5e0!3m2!1ses-419!2smx!4v1750908607656!5m2!1ses-419!2smx"
+                            width="100%" height="100%" style="border: 0; border-radius: 12px; min-height: 480px;"
+                            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            class="rounded-xl"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Contacto -->
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-semibold text-blue-400 mb-6">📍 Contacto</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-gray-300 font-medium mb-2">Dirección:</p>
+                            <p class="text-gray-400 leading-relaxed">
+                                Calz Zavaleta 1306 A-Local 25,<br>
+                                Sta Cruz Buenavista, 72150 Puebla, Pue.
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-gray-300 font-medium mb-3">Teléfonos:</p>
+                            <div class="space-y-2">
+                                <div>
+                                    <p class="text-gray-400 text-sm">Soluciones Tecnológicas.NET</p>
+                                    <a href="tel:222-114-8855"
+                                        class="text-gray-300 hover:text-blue-400 transition-colors duration-200">
+                                        222 - 114 - 8855
+                                    </a>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-sm">Sistemas de video vigilancia</p>
+                                    <a href="tel:221-575-6956"
+                                        class="text-gray-300 hover:text-blue-400 transition-colors duration-200">
+                                        221 - 575 - 6956
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Más contacto -->
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <p class="text-gray-400 text-sm">Soporte técnico de TI</p>
+                        <a href="tel:221-188-9976"
+                            class="text-gray-300 hover:text-blue-400 transition-colors duration-200 block">
+                            221 - 188 - 9976
+                        </a>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="text-gray-300 font-medium mb-3">Email:</p>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ventas@soluciontecnologica.net&su=Consulta&body=Hola,%20me%20gustaría%20obtener%20más%20información."
+                            target="_blank" rel="noopener noreferrer"
+                            class="text-gray-300 hover:text-blue-400 transition-colors duration-200 break-all">
+                            ventas@soluciontecnologica.net
+                        </a>
+                    </div>
+                    <div class="pt-4">
+                        <p class="text-gray-300 font-medium mb-3">Soluciones Tecnológicas:</p>
+                        <a href="https://soluciontecnologica.net/" target="_blank" rel="noopener noreferrer"
+                            class="text-gray-300 hover:text-blue-400 transition-colors duration-200 break-all">
+                            soluciontecnologica.net
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Redes Sociales -->
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-semibold text-blue-400 mb-6">🌐 Redes Sociales</h3>
+                    <div class="flex flex-wrap gap-4">
+                        <!-- Facebook Links -->
+                        <a href="https://www.facebook.com/share/1CYBEuwVnL/" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white w-12 h-12 rounded-full transition-all duration-200 transform hover:scale-110 shadow-lg"
+                            title="Facebook">
+                            <i class="fab fa-facebook-f text-lg"></i>
+                        </a>
+
+                        <a href="https://www.facebook.com/share/1EpfWuCWJ2/" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white w-12 h-12 rounded-full transition-all duration-200 transform hover:scale-110 shadow-lg"
+                            title="Facebook">
+                            <i class="fab fa-facebook-f text-lg"></i>
+                        </a>
+
+                        <a href="https://www.facebook.com/share/16RnHiyyvY/?mibextid=qi2Omg" target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white w-12 h-12 rounded-full transition-all duration-200 transform hover:scale-110 shadow-lg"
+                            title="Facebook">
+                            <i class="fab fa-facebook-f text-lg"></i>
+                        </a>
+
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/camarasdevigilanciapuebla?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white w-12 h-12 rounded-full transition-all duration-200 transform hover:scale-110 shadow-lg"
+                            title="Instagram">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-slate-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    © 2025 Ahorra con Paneles Solares - Soluciones Tecnológicas.net. Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/contact.js"></script>
 </body>
 
 </html>

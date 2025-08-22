@@ -1,211 +1,230 @@
 <%- include('./partials/head.ejs') %>
 
-<body class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 md:p-8">
+<body>
 
-    <div class="w-full max-w-6xl mx-auto">
-
-        <!-- Título -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Cotizador de Paneles Solares</h1>
-            <p class="text-slate-600">Configura y obtén un presupuesto instantáneo para tu sistema solar</p>
+    <header class="bg-slate-900/95 backdrop-blur-md border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    Volver al inicio
+                </a>
+                <h1 class="hidden sm:flex text-2xl font-bold text-white items-center gap-2">
+                    <i data-lucide="calculator" class="text-blue-400"></i>
+                    Cotizador Solar
+                </h1>
+            </div>
         </div>
+    </header>
+    <div class="bg-gradient-to-br h-screen from-slate-50 to-slate-100 p-4 md:p-8 ">
+        <div class="w-full max-w-6xl mx-auto">
+            <!-- Título -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-slate-800 mb-2">Cotizador de Paneles Solares</h1>
+                <p class="text-slate-600">Configura y obtén un presupuesto instantáneo para tu sistema solar</p>
+            </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Formulario de Cotización -->
-            <div class="lg:col-span-2">
-                <div class="bg-white rounded-lg shadow-lg border-0 overflow-hidden h-full">
-                    <!-- Header -->
-                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-6">
-                        <div class="flex items-center gap-3">
-                            <span class="bg-white text-yellow-500 p-2 rounded-full flex items-center justify-center">
-                                <i class="ri-sun-line text-lg"></i>
-                            </span>
-                            <div>
-                                <h2 class="text-xl font-bold">Configura tu Sistema Solar</h2>
-                                <p class="text-yellow-100 text-sm">Proporciona los datos de tu consumo eléctrico para
-                                    calcular tu sistema ideal</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Contenido -->
-                    <div class="p-6">
-                        <div class="mb-6">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                                <i class="ri-sun-line text-yellow-500"></i>
-                                Paneles Solares
-                            </h3>
-                            <hr class="border-gray-200">
-                        </div>
-
-                        <!-- Configuración básica -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <!-- Tipo de tarifa -->
-
-                            <div class="space-y-2">
-                                <label for="tipoTarifa" class="block text-sm font-medium text-slate-700">
-                                    Tipo de tarifa eléctrica
-                                </label>
-                                <select id="tipoTarifa"
-                                    class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
-                                    <option value="">Selecciona tipo de tarifa</option>
-                                    <% dataQuoter.forEach(type => {%>
-                                    <option value="<%= type.valor %>"> <%= type.valor %> </option>
-                                    <%})%>
-                                </select>
-                            </div>
-
-                            <!-- Número de hilos -->
-                            <div class="space-y-2">
-                                <label for="numeroHilos" class="block text-sm font-medium text-slate-700">
-                                    Número de hilos
-                                </label>
-                                <select id="numeroHilos"
-                                    class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
-                                    <option value="">Selecciona número de hilos</option>
-                                    <option value="1">1 Hilos</option>
-                                    <option value="2">2 Hilos</option>
-                                    <option value="3">3 Hilos</option>
-                                </select>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Formulario de Cotización -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg shadow-lg border-0 overflow-hidden h-full">
+                        <!-- Header -->
+                        <div class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-6">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="bg-white text-yellow-500 p-2 rounded-full flex items-center justify-center">
+                                    <i class="ri-sun-line text-lg"></i>
+                                </span>
+                                <div>
+                                    <h2 class="text-xl font-bold">Configura tu Sistema Solar</h2>
+                                    <p class="text-yellow-100 text-sm">Proporciona los datos de tu consumo eléctrico
+                                        para
+                                        calcular tu sistema ideal</p>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Agregando campo de distancia -->
-                        <div class="grid grid-cols-1 gap-6 mb-8">
-                            <div class="space-y-2">
-                                <label for="distanciaMedidor" class="block text-sm font-medium text-slate-700">
-                                    Distancia entre el medidor y la instalación (metros)
-                                </label>
-                                <input id="distanciaMedidor" type="number" min="0" step="0.1"
-                                    class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700"
-                                    placeholder="¿Cuál es la distancia entre el medidor y la instalación?">
+                        <!-- Contenido -->
+                        <div class="p-6">
+                            <div class="mb-6">
+                                <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                                    <i class="ri-sun-line text-yellow-500"></i>
+                                    Paneles Solares
+                                </h3>
+                                <hr class="border-gray-200">
                             </div>
-                        </div>
 
-                        <!-- Consumo de kWH -->
-                        <div class="mb-6">
-                            <h4 class="text-lg font-medium text-slate-700 mb-3">Consumo de kWH de los últimos 6 meses
-                            </h4>
-                            <p class="text-sm text-slate-500 mb-4">
-                                Ingresa el consumo en kWH de cada mes para calcular tu promedio y determinar el número
-                                de paneles necesarios
-                            </p>
+                            <!-- Configuración básica -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <!-- Tipo de tarifa -->
 
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 <div class="space-y-2">
-                                    <label for="kwh1" class="block text-sm font-medium text-slate-700">
-                                        Mes 1 (kWH)
+                                    <label for="tipoTarifa" class="block text-sm font-medium text-slate-700">
+                                        Tipo de tarifa eléctrica
                                     </label>
-                                    <input type="number" id="kwh1" placeholder="0" min="0" step="0.1"
-                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    <select id="tipoTarifa"
+                                        class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                        <option value="">Selecciona tipo de tarifa</option>
+                                        <% dataQuoter.forEach(type => {%>
+                                        <option value="<%= type.valor %>"> <%= type.valor %> </option>
+                                        <%})%>
+                                    </select>
                                 </div>
+
+                                <!-- Número de hilos -->
                                 <div class="space-y-2">
-                                    <label for="kwh2" class="block text-sm font-medium text-slate-700">
-                                        Mes 2 (kWH)
+                                    <label for="numeroHilos" class="block text-sm font-medium text-slate-700">
+                                        Número de hilos
                                     </label>
-                                    <input type="number" id="kwh2" placeholder="0" min="0" step="0.1"
-                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    <select id="numeroHilos"
+                                        class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                        <option value="">Selecciona número de hilos</option>
+                                        <option value="1">1 Hilos</option>
+                                        <option value="2">2 Hilos</option>
+                                        <option value="3">3 Hilos</option>
+                                    </select>
                                 </div>
+                            </div>
+
+                            <!-- Agregando campo de distancia -->
+                            <div class="grid grid-cols-1 gap-6 mb-8">
                                 <div class="space-y-2">
-                                    <label for="kwh3" class="block text-sm font-medium text-slate-700">
-                                        Mes 3 (kWH)
+                                    <label for="distanciaMedidor" class="block text-sm font-medium text-slate-700">
+                                        Distancia entre el medidor y la instalación (metros)
                                     </label>
-                                    <input type="number" id="kwh3" placeholder="0" min="0" step="0.1"
-                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    <input id="distanciaMedidor" type="number" min="0" step="0.1"
+                                        class="cotizador-select w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700"
+                                        placeholder="¿Cuál es la distancia entre el medidor y la instalación?">
                                 </div>
-                                <div class="space-y-2">
-                                    <label for="kwh4" class="block text-sm font-medium text-slate-700">
-                                        Mes 4 (kWH)
-                                    </label>
-                                    <input type="number" id="kwh4" placeholder="0" min="0" step="0.1"
-                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
-                                </div>
-                                <div class="space-y-2">
-                                    <label for="kwh5" class="block text-sm font-medium text-slate-700">
-                                        Mes 5 (kWH)
-                                    </label>
-                                    <input type="number" id="kwh5" placeholder="0" min="0" step="0.1"
-                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
-                                </div>
-                                <div class="space-y-2">
-                                    <label for="kwh6" class="block text-sm font-medium text-slate-700">
-                                        Mes 6 (kWH)
-                                    </label>
-                                    <input type="number" id="kwh6" placeholder="0" min="0" step="0.1"
-                                        class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                            </div>
+
+                            <!-- Consumo de kWH -->
+                            <div class="mb-6">
+                                <h4 class="text-lg font-medium text-slate-700 mb-3">Consumo de kWH de los últimos 6
+                                    meses
+                                </h4>
+                                <p class="text-sm text-slate-500 mb-4">
+                                    Ingresa el consumo en kWH de cada mes para calcular tu promedio y determinar el
+                                    número
+                                    de paneles necesarios
+                                </p>
+
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    <div class="space-y-2">
+                                        <label for="kwh1" class="block text-sm font-medium text-slate-700">
+                                            Mes 1 (kWH)
+                                        </label>
+                                        <input type="number" id="kwh1" placeholder="0" min="0" step="0.1"
+                                            class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="kwh2" class="block text-sm font-medium text-slate-700">
+                                            Mes 2 (kWH)
+                                        </label>
+                                        <input type="number" id="kwh2" placeholder="0" min="0" step="0.1"
+                                            class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="kwh3" class="block text-sm font-medium text-slate-700">
+                                            Mes 3 (kWH)
+                                        </label>
+                                        <input type="number" id="kwh3" placeholder="0" min="0" step="0.1"
+                                            class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="kwh4" class="block text-sm font-medium text-slate-700">
+                                            Mes 4 (kWH)
+                                        </label>
+                                        <input type="number" id="kwh4" placeholder="0" min="0" step="0.1"
+                                            class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="kwh5" class="block text-sm font-medium text-slate-700">
+                                            Mes 5 (kWH)
+                                        </label>
+                                        <input type="number" id="kwh5" placeholder="0" min="0" step="0.1"
+                                            class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="kwh6" class="block text-sm font-medium text-slate-700">
+                                            Mes 6 (kWH)
+                                        </label>
+                                        <input type="number" id="kwh6" placeholder="0" min="0" step="0.1"
+                                            class="kwh-input w-full h-12 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white text-slate-700">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Panel de Resumen -->
-            <div class="lg:col-span-1">
-                <div class="bg-white rounded-lg shadow-lg border-0 h-full flex flex-col">
-                    <!-- Header -->
-                    <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6">
-                        <h3 class="text-xl font-bold">Estimado</h3>
-                        <p class="text-slate-300 text-sm">Resumen de tu sistema solar</p>
-                    </div>
-
-                    <!-- Contenido -->
-                    <div class="p-6 flex-grow flex flex-col">
-                        <!-- Resumen de selecciones -->
-                        <div class="bg-slate-50 rounded-lg p-4 mb-6 space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-slate-600">Servicio:</span>
-                                <span
-                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
-                                    Paneles Solares
-                                </span>
-                            </div>
-
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-slate-600">Tarifa:</span>
-                                <span id="resumenTarifa"
-                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
-                                    -
-                                </span>
-                            </div>
-
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-slate-600">Hilos:</span>
-                                <span id="resumenHilos"
-                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
-                                    -
-                                </span>
-                            </div>
-
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-slate-600">Promedio:</span>
-                                <span id="resumenPromedio"
-                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
-                                    0.0 kWH
-                                </span>
-                            </div>
-
-                            <!-- Agregando distancia al resumen -->
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-slate-600">Distancia:</span>
-                                <span id="resumenDistancia"
-                                    class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
-                                    - metros
-                                </span>
-                            </div>
+                <!-- Panel de Resumen -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-lg border-0 h-full flex flex-col">
+                        <!-- Header -->
+                        <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6">
+                            <h3 class="text-xl font-bold">Estimado</h3>
+                            <p class="text-slate-300 text-sm">Resumen de tu sistema solar</p>
                         </div>
 
-                        <!-- Precio -->
-                        <div class="mt-auto">
-                            <hr class="border-gray-200 mb-6">
+                        <!-- Contenido -->
+                        <div class="p-6 flex-grow flex flex-col">
+                            <!-- Resumen de selecciones -->
+                            <div class="bg-slate-50 rounded-lg p-4 mb-6 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium text-slate-600">Servicio:</span>
+                                    <span
+                                        class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                        Paneles Solares
+                                    </span>
+                                </div>
 
-                            <!-- Botón de contacto -->
-                            <button id="btnContactar"
-                                class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 px-4 rounded-lg flex items-center justify-center transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                                disabled>
-                                <i class="ri-mail-line mr-2"></i>
-                                Realizar Cotización
-                            </button>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium text-slate-600">Tarifa:</span>
+                                    <span id="resumenTarifa"
+                                        class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                        -
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium text-slate-600">Hilos:</span>
+                                    <span id="resumenHilos"
+                                        class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                        -
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium text-slate-600">Promedio:</span>
+                                    <span id="resumenPromedio"
+                                        class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                        0.0 kWH
+                                    </span>
+                                </div>
+
+                                <!-- Agregando distancia al resumen -->
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium text-slate-600">Distancia:</span>
+                                    <span id="resumenDistancia"
+                                        class="text-sm font-semibold text-slate-800 bg-white px-3 py-1 rounded-full border">
+                                        - metros
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Precio -->
+                            <div class="mt-auto">
+                                <hr class="border-gray-200 mb-6">
+
+                                <!-- Botón de contacto -->
+                                <button id="btnContactar"
+                                    class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 px-4 rounded-lg flex items-center justify-center transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                                    disabled>
+                                    <i class="ri-mail-line mr-2"></i>
+                                    Realizar Cotización
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -246,7 +265,8 @@
                             <p class="text-yellow-700 text-sm">
                                 Esta cotización es un <strong>estimado aproximado</strong> basado en los datos
                                 proporcionados.
-                                Los precios finales pueden variar según las condiciones específicas de la instalación.
+                                Los precios finales pueden variar según las condiciones específicas de la
+                                instalación.
                             </p>
                         </div>
                     </div>
@@ -260,99 +280,81 @@
                         <i class="ri-sun-line text-yellow-500"></i>
                         Tu Sistema Solar Incluye:
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3 bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="bg-yellow-100 p-2 rounded-full">
+                                <i class="ri-sun-line text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <div id="modalPaneles" class="font-semibold text-slate-800">24 Paneles Solares</div>
+                                <div id="modalTipoPaneles" class="text-sm text-slate-600">580W cada uno</div>
+                            </div>
+                        </div>
 
-                        
+                        <div class="flex items-center gap-3 bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="bg-blue-100 p-2 rounded-full">
+                                <i class="ri-building-line text-blue-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-slate-800">Estructuras de Montaje</div>
+                                <div class="text-sm text-slate-600">Incluidas</div>
+                                <div class="mt-2">
+                                    <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                        <span class="text-slate-600 text-sm">Ancho:</span>
+                                        <span id="modalAncho" class="font-semibold text-slate-800 text-sm">-</span>
+                                    </div>
+                                    <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                                        <span class="text-slate-600 text-sm">Alto:</span>
+                                        <span id="modalAlto" class="font-semibold text-slate-800 text-sm">-</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="flex items-center gap-3 bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="bg-purple-100 p-2 rounded-full">
+                                <i class="ri-flashlight-line text-purple-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-slate-800">1 Inversor</div>
+                                <div id="modalCapacidadInversor" class="text-sm text-slate-600">Capacidad 15kW</div>
+                            </div>
+                        </div>
+
+
+                        <div class="flex items-center gap-3 bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="bg-orange-100 p-2 rounded-full">
+                                <i class="ri-plug-line text-orange-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-slate-800">Cableado Completo</div>
+                                <div id="modalDistancia" class="text-sm text-slate-600">12 metros de distancia</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="bg-yellow-100 p-2 rounded-full">
+                                <i class="ri-flashlight-line text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-slate-800">Gestoria ante CFE para cambio de medidor
+                                    bidireccional</div>
+                            </div>
+                        </div>
+                        <div id="modalRequiereUVIE"
+                            class="hidden flex items-center gap-3 bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="bg-red-100 p-2 rounded-full">
+                                <i class="ri-question-line text-red-600"></i>
+                            </div>
+                            <div>
+                                <div id="UVIEUIIE" class="font-semibold text-slate-800">Require UVIE y UIIE</div>
+                            </div>
+                        </div>
 
                     </div>
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                            <span class="text-slate-600 text-sm">Número de Paneles:</span>
-                            <span id="modalPaneles" class="font-semibold text-slate-800 text-sm">-</span>
-                        </div>
-                        <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                            <span class="text-slate-600 text-sm">Tipo de Paneles:</span>
-                            <span id="modalTipoPaneles" class="font-semibold text-slate-800 text-sm">-</span>
-                        </div>
-                        <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                            <span class="text-slate-600 text-sm">Precio Paneles:</span>
-                            <span id="modalPrecioPaneles" class="font-semibold text-green-600 text-sm">-</span>
-                        </div>
-                    </div>
 
-
-                    <!-- Información de Estructuras -->
-                    <div class="space-y-3">
-                        <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-1">
-                            <i class="ri-building-line text-blue-500 mr-2"></i>
-                            Estructuras
-                        </h3>
-
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Precio Estructuras:</span>
-                                <span id="modalPrecioEstructuras" class="font-semibold text-green-600 text-sm">-</span>
-                            </div>
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Ancho:</span>
-                                <span id="modalAncho" class="font-semibold text-slate-800 text-sm">-</span>
-                            </div>
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Alto:</span>
-                                <span id="modalAlto" class="font-semibold text-slate-800 text-sm">-</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Información del Inversor -->
-                    <div class="space-y-3">
-                        <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-1">
-                            <i class="ri-flashlight-line text-purple-500 mr-2"></i>
-                            Inversor
-                        </h3>
-
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Capacidad:</span>
-                                <span id="modalCapacidadInversor" class="font-semibold text-slate-800 text-sm">-</span>
-                            </div>
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Precio Inversor:</span>
-                                <span id="modalPrecioInversor" class="font-semibold text-green-600 text-sm">-</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Información de Cableado -->
-                    <div class="space-y-3">
-                        <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-1">
-                            <i class="ri-plug-line text-orange-500 mr-2"></i>
-                            Cableado
-                        </h3>
-
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Distancia:</span>
-                                <span id="modalDistancia" class="font-semibold text-slate-800 text-sm">-</span>
-                            </div>
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Tipo de Tubería:</span>
-                                <span id="modalTipoTuberia" class="font-semibold text-slate-800 text-sm">-</span>
-                            </div>
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Precio Tubería:</span>
-                                <span id="modalPrecioTuberia" class="font-semibold text-green-600 text-sm">-</span>
-                            </div>
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Total Cable:</span>
-                                <span id="modalTotalCable" class="font-semibold text-slate-800 text-sm">-</span>
-                            </div>
-                            <div class="flex justify-between items-center py-1 border-b border-slate-100">
-                                <span class="text-slate-600 text-sm">Precio Cable:</span>
-                                <span id="modalPrecioCable" class="font-semibold text-green-600 text-sm">-</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Precio Total -->
@@ -364,7 +366,7 @@
                         </div>
                         <p class="text-xs text-slate-600">
                             <i class="ri-information-line mr-1"></i>
-                            Precio aproximado sujeto a confirmación técnica
+                            Precio aproximado sujeto a inspección técnica
                         </p>
                     </div>
                 </div>
@@ -425,7 +427,7 @@
                             <i class="ri-phone-line text-green-500"></i>
                             <span class="font-medium text-slate-800">Llámanos</span>
                         </div>
-                        <p class="text-slate-600 text-sm ml-6">+52 (555) 123-4567</p>
+                        <a href="tel:2215756956" class="text-slate-600 text-sm ml-6">+52 221 575 6956</a>
                     </div>
 
                     <div class="bg-slate-50 rounded-lg p-4">
@@ -441,7 +443,8 @@
                             <i class="ri-whatsapp-line text-green-500"></i>
                             <span class="font-medium text-slate-800">WhatsApp</span>
                         </div>
-                        <p class="text-slate-600 text-sm ml-6">+52 (555) 987-6543</p>
+                        <a href="https://wa.me/+522215756956?text=Hola,%20me%20gustaría%20saber%20más."
+                            class="text-slate-600 text-sm ml-6">+52 221 575 6956</a>
                     </div>
                 </div>
 
@@ -457,11 +460,114 @@
         </div>
     </div>
 
-    <%- include('./partials/quoter-per.ejs') %>
+    <!-- Modal de Registro de Datos del Usuario -->
+    <div id="userDataModal"
+        class="fixed inset-0 bg-black bg-opacity-50 modal-backdrop hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <!-- Header del modal -->
+            <div class="bg-green-500 text-white p-4 rounded-t-lg flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                        <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold">Registro de Datos</h2>
+                        <p class="text-green-100 text-sm">Completa tu información personal</p>
+                    </div>
+                </div>
+                <button id="closeModalBtn" class="text-white hover:text-gray-200 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
 
+            <!-- Contenido del modal -->
+            <div class="p-6">
+                <!-- Mensaje de advertencia -->
+                <div class="bg-amber-50 border border-amber-200 rounded-md p-4 mb-6">
+                    <div class="flex items-start space-x-2">
+                        <i data-lucide="info" class="w-5 h-5 text-amber-600 mt-0.5"></i>
+                        <div>
+                            <h3 class="font-medium text-amber-800">Información Requerida</h3>
+                            <p class="text-sm text-amber-700 mt-1">
+                                Todos los campos son obligatorios para continuar con tu cotización solar.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario -->
+                <form id="userDataForm" class="space-y-4">
+                    <!-- Nombre -->
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i data-lucide="user" class="w-4 h-4 inline mr-2"></i>
+                            Nombre Completo
+                        </label>
+                        <input type="text" id="nombre" name="nombre"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="Ingresa tu nombre completo" required>
+                        <div id="nombreError" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div>
+                        <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i data-lucide="phone" class="w-4 h-4 inline mr-2"></i>
+                            Teléfono
+                        </label>
+                        <input type="tel" id="telefono" name="telefono"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="Ej: +52 55 1234 5678" required>
+                        <div id="telefonoError" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Correo -->
+                    <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i data-lucide="mail" class="w-4 h-4 inline mr-2"></i>
+                            Correo Electrónico
+                        </label>
+                        <input type="email" id="correo" name="correo"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="ejemplo@correo.com" required>
+                        <div id="correoError" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Dirección -->
+                    <div>
+                        <label for="direccion" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 inline mr-2"></i>
+                            Dirección Completa
+                        </label>
+                        <textarea id="direccion" name="direccion" rows="3"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                            placeholder="Calle, número, colonia, ciudad, estado, código postal" required></textarea>
+                        <div id="direccionError" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="flex space-x-3 pt-4">
+                        <button type="button" id="cancelBtn"
+                            class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" id="saveBtn"
+                            class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md transition-colors flex items-center justify-center">
+                            <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                            Guardar Datos
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <%- include('./partials/quoter-per.ejs') %>
     <script>
         let data;
-
+        let cotizacionData;
         document.addEventListener('DOMContentLoaded', function () {
             // Referencias a los elementos del formulario
             const tipoTarifaSelect = document.getElementById('tipoTarifa');
@@ -475,6 +581,7 @@
             const resumenPromedio = document.getElementById('resumenPromedio');
             const resumenDistancia = document.getElementById('resumenDistancia'); // Nueva referencia
             const btnContactar = document.getElementById('btnContactar');
+
 
             // Función para actualizar el resumen
             function actualizarResumen() {
@@ -565,7 +672,7 @@
                         });
 
                         // Para demo, usar datos de ejemplo si la API falla
-                        let cotizacionData;
+
                         console.log(response);
 
                         if (!response.ok) {
@@ -600,22 +707,21 @@
 
             function mostrarModalCotizacion(cotizacionData) {
                 // Llenar los datos en el modal
-                document.getElementById('modalPaneles').textContent = cotizacionData.numberOfPanels || '-';
-                document.getElementById('modalTipoPaneles').textContent = cotizacionData.typeOfPanels ? `${cotizacionData.typeOfPanels}W` : '-';
-                document.getElementById('modalPrecioPaneles').textContent = cotizacionData.priceOfPanelsTotal ? `$${cotizacionData.priceOfPanelsTotal.toLocaleString()}` : '-';
+                document.getElementById('modalPaneles').textContent = `${cotizacionData.numberOfPanels} Paneles Solares` || '-';
+                document.getElementById('modalTipoPaneles').textContent = `De ${cotizacionData.typeOfPanels}W cada uno`
 
-                document.getElementById('modalPrecioEstructuras').textContent = cotizacionData.priceOfStructures ? `$${cotizacionData.priceOfStructures.toLocaleString()}` : '-';
                 document.getElementById('modalAncho').textContent = cotizacionData.widthForStructure ? `${cotizacionData.widthForStructure}m` : '-';
                 document.getElementById('modalAlto').textContent = cotizacionData.heightForStructure ? `${cotizacionData.heightForStructure}m` : '-';
 
-                document.getElementById('modalCapacidadInversor').textContent = cotizacionData.invertorCapacity || '-';
-                document.getElementById('modalPrecioInversor').textContent = cotizacionData.invertorPrice ? `$${parseFloat(cotizacionData.invertorPrice).toLocaleString()}` : '-';
+                document.getElementById('modalCapacidadInversor').textContent = `Un inversor con capacidad de: ${cotizacionData.invertorCapacity}` || '-';
+                document.getElementById('modalDistancia').textContent = `${cotizacionData.totalWire} metros de cable con tuberia de "${cotizacionData.typeOfPipe}` || '-';
 
-                document.getElementById('modalDistancia').textContent = cotizacionData.distance ? `${cotizacionData.distance}m` : '-';
-                document.getElementById('modalTipoTuberia').textContent = cotizacionData.typeOfPipe || '-';
-                document.getElementById('modalPrecioTuberia').textContent = cotizacionData.priceTotalOfPipe ? `$${cotizacionData.priceTotalOfPipe.toLocaleString()}` : '-';
-                document.getElementById('modalTotalCable').textContent = cotizacionData.totalWire ? `${cotizacionData.totalWire}m` : '-';
-                document.getElementById('modalPrecioCable').textContent = cotizacionData.priceOfWire ? `$${cotizacionData.priceOfWire.toLocaleString()}` : '-';
+                if (cotizacionData.requireUVIEAndUIIE === true) {
+                    document.getElementById('modalRequiereUVIE').classList.remove('hidden');
+                    document.getElementById('UVIEUIIE').textContent = `La tarifa ${cotizacionData.rates} requiere UVIE y UIIE`;
+                } else {
+                    document.getElementById('modalRequiereUVIE').classList.add('hidden');
+                }
 
                 document.getElementById('modalPrecioTotal').textContent = cotizacionData.priceTotal ? cotizacionData.priceTotal.toLocaleString() : '0.00';
 
@@ -633,9 +739,7 @@
             });
 
 
-            document.getElementById('btnContactarVendedor').addEventListener('click', function () {
-                alert('Redirigiendo a contacto con vendedor - próximamente');
-            });
+            document.getElementById('btnContactarVendedor').addEventListener('click', openModal);
 
             document.getElementById('cerrarModalContacto').addEventListener('click', cerrarModalContacto);
             document.getElementById('btnIrContacto').addEventListener('click', function () {
@@ -665,6 +769,178 @@
                     cerrarModal();
                     cerrarModalContacto();
                     cerrarModalPersonalizada();
+                }
+            });
+
+            lucide.createIcons();
+
+            // Referencias a elementos del DOM
+            const modal = document.getElementById('userDataModal');
+            const openModalBtn = document.getElementById('openModalBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const form = document.getElementById('userDataForm');
+
+            // Función para abrir el modal
+            function openModal() {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Función para cerrar el modal
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+                clearErrors();
+                form.reset();
+            }
+
+            // Función para limpiar errores
+            function clearErrors() {
+                const errorElements = document.querySelectorAll('[id$="Error"]');
+                errorElements.forEach(element => {
+                    element.classList.add('hidden');
+                    element.textContent = '';
+                });
+
+                const inputs = document.querySelectorAll('input, textarea');
+                inputs.forEach(input => {
+                    input.classList.remove('border-red-500');
+                });
+            }
+
+            // Función para mostrar error
+            function showError(fieldName, message) {
+                const errorElement = document.getElementById(fieldName + 'Error');
+                const inputElement = document.getElementById(fieldName);
+
+                errorElement.textContent = message;
+                errorElement.classList.remove('hidden');
+                inputElement.classList.add('border-red-500');
+            }
+
+            // Función para validar email
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Función para validar formulario
+            function validateForm(formData) {
+                clearErrors();
+                let isValid = true;
+
+                // Validar nombre
+                if (!formData.name.trim()) {
+                    showError('nombre', 'El nombre es obligatorio');
+                    isValid = false;
+                }
+
+                // Validar teléfono
+                if (!formData.phone.trim()) {
+                    showError('telefono', 'El teléfono es obligatorio');
+                    isValid = false;
+                }
+
+                // Validar correo
+                if (!formData.email.trim()) {
+                    showError('correo', 'El correo es obligatorio');
+                    isValid = false;
+                } else if (!isValidEmail(formData.email)) {
+                    showError('correo', 'Ingresa un correo válido');
+                    isValid = false;
+                }
+
+                // Validar dirección
+                if (!formData.address.trim()) {
+                    showError('direccion', 'La dirección es obligatoria');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+
+            closeModalBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+
+            // Cerrar modal al hacer clic fuera de él
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Cerrar modal con tecla Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+
+            // Manejar envío del formulario
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = {
+                    name: document.getElementById('nombre').value,
+                    phone: document.getElementById('telefono').value,
+                    email: document.getElementById('correo').value,
+                    address: document.getElementById('direccion').value,
+                    cotizacionData: cotizacionData,
+
+                };
+
+                if (validateForm(formData)) {
+                    // Simular guardado de datos
+                    console.log('Datos guardados:', formData);
+                    try {
+                        const response = await fetch('/cotizador/guardar', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(formData)
+                        });
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            // Éxito                
+                            Swal.fire({
+                                title: '¡Pedido Enviado!',
+                                text: result.successMessage || 'Hemos recibido tu pedido. Te contactaremos pronto para coordinar la instalación.',
+                                icon: 'success',
+                                confirmButtonText: 'Entendido',
+                                confirmButtonColor: '#16a34a'
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            const errorMessages = result.messages?.join('\n') || result.message || 'Error al enviar el pedido';
+
+                            Swal.fire({
+                                title: 'Error',
+                                icon: 'error',
+                                html: `<ul style="text-align:left;">${result.messages?.map(msg => `<li>${msg}</li>`).join('') || errorMessages}</ul>`,
+                                confirmButtonText: 'Revisar',
+                                confirmButtonColor: '#dc2626'
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error al enviar pedido:', error);
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Hubo un problema al enviar tu pedido. Por favor, inténtalo de nuevo.',
+                            icon: 'error',
+                            confirmButtonText: 'Entendido',
+                            confirmButtonColor: '#dc2626'
+                        });
+                    }
+                    // Cerrar modal
+                    // closeModal();
+
                 }
             });
         });
