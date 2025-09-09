@@ -16,6 +16,8 @@ document
       "g-recaptcha-response": token,
     };
 
+    console.log(JSON.stringify(contactData));
+
     try {
       const res = await fetch("/contact", {
         method: "POST",

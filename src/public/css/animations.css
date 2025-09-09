@@ -1,37 +1,35 @@
- @keyframes bounce {
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
 
-            0%,
-            100% {
-                transform: translateY(-25%);
-                animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-            }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
 
-            50% {
-                transform: translateY(0);
-                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-            }
-        }
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
 
-        @keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
 
-            0%,
-            100% {
-                opacity: 1;
-            }
+.animate-bounce-slow {
+  animation: bounce 2s infinite;
+}
 
-            50% {
-                opacity: 0.5;
-            }
-        }
+.animate-pulse-slow {
+  animation: pulse 3s infinite;
+}
 
-        .animate-bounce-slow {
-            animation: bounce 2s infinite;
-        }
-
-        .animate-pulse-slow {
-            animation: pulse 3s infinite;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+html {
+  scroll-behavior: smooth;
+}
